@@ -6,7 +6,7 @@
 2. [Getting started](#started)
 3. [Using install scripts](#scripts)
 4. [Manual installation](#manual)
-7. [Configuring AeroThemePlasma](#conf)
+5. [Configuring AeroThemePlasma](#conf)
 
 ## Prerequisites <a name="preq"></a>
 
@@ -34,7 +34,7 @@ KSysGuard has been officially deprecated by KDE, however an unofficial [port](ht
 Required Packages:
 
 ```bash
-dnf install plasma-workspace-devel unzip kvantum qt6-qtmultimedia-devel qt6-qt5compat-devel libplasma-devel qt6-qtbase-devel qt6-qtwayland-devel plasma-activities-devel kf6-kpackage-devel kf6-kglobalaccel-devel qt6-qtsvg-devel wayland-devel plasma-wayland-protocols kf6-ksvg-devel kf6-kcrash-devel kf6-kguiaddons-devel kf6-kcmutils-devel kf6-kio-devel kdecoration-devel kf6-ki18n-devel kf6-knotifications-devel kf6-kirigami-devel kf6-kiconthemes-devel cmake gmp-ecm-devel kf5-plasma-devel libepoxy-devel kwin-devel kf6-karchive kf6-karchive-devel plasma-wayland-protocols-devel qt6-qtbase-private-devel qt6-qtbase-devel kf6-knewstuff-devel kf6-knotifyconfig-devel kf6-attica-devel kf6-krunner-devel kf6-kdbusaddons-devel kf6-sonnet-devel plasma5support-devel plasma-activities-stats-devel polkit-qt6-1-devel qt-devel libdrm-devel
+dnf install plasma-workspace-devel unzip kvantum qt6-qtmultimedia-devel qt6-qt5compat-devel libplasma-devel qt6-qtbase-devel qt6-qtwayland-devel plasma-activities-devel kf6-kpackage-devel kf6-kglobalaccel-devel qt6-qtsvg-devel wayland-devel plasma-wayland-protocols kf6-ksvg-devel kf6-kcrash-devel kf6-kguiaddons-devel kf6-kcmutils-devel kf6-kio-devel kdecoration-devel kf6-ki18n-devel kf6-knotifications-devel kf6-kirigami-devel kf6-kiconthemes-devel cmake gmp-ecm-devel kf5-plasma-devel libepoxy-devel kwin-devel kf6-karchive kf6-karchive-devel plasma-wayland-protocols-devel qt6-qtbase-private-devel qt6-qtbase-devel kf6-knewstuff-devel kf6-knotifyconfig-devel kf6-attica-devel kf6-krunner-devel kf6-kdbusaddons-devel kf6-sonnet-devel plasma5support-devel plasma-activities-stats-devel polkit-qt6-1-devel qt-devel libdrm-devel kf6-kitemmodels-devel kf6-kstatusnotifieritem-devel
 ```
 
 On Fedora, additional dependencies for X11 include:
@@ -44,10 +44,10 @@ On Fedora, additional dependencies for X11 include:
 
 ## Getting started <a name="started"></a>
 
-To download this repository, clone it with `git`: 
+To download this repository, clone it with `git`:
 
 ```bash
-$ git clone https://gitgud.io/wackyideas/aerothemeplasma.git aerothemeplasma 
+$ git clone https://gitgud.io/wackyideas/aerothemeplasma.git aerothemeplasma
 $ cd aerothemeplasma
 ```
 
@@ -119,26 +119,25 @@ $ sh install_plasma_components.sh
 $ sh install_misc_components.sh # Usually not required to run again
 ```
 
-Typically it's enough to run the first four scripts after ATP has been updated. It's highly recommended to check for new commits and read the extended descriptions in order to see what has actually changed and what's required when updating. 
+Typically it's enough to run the first four scripts after ATP has been updated. It's highly recommended to check for new commits and read the extended descriptions in order to see what has actually changed and what's required when updating.
 
 When doing a full system upgrade, KWin effects and `libplasma` modifications tend to stop working. Running `compile.sh` after a full system upgrade is required for them to work again (assuming no breaking upstream changes).
 
 ## Manual installation <a name="manual"></a>
 
-If installing ATP manually, the only script that should be run is the compile script as described previously. 
+If installing ATP manually, the only script that should be run is the compile script as described previously.
 
 After that, follow these steps:
 
 ### Plasma components
 
 1. Move the folders `desktoptheme`, `look-and-feel`, `plasmoids`, `layout-templates`, `shells` into `~/.local/share/plasma`. If the folder doesn't exist, create it. These folders contain the following:
-
    - Plasma Style
    - Global Theme (more accurately, just the lock screen)
    - Plasmoids
    - Plasma shell
    - Preset panel layout that can be applied from Edit mode
-   
+
 ### Note for SevenTasks:
 
 SevenTasks relies on modifications found in `misc/libplasma` in order to work properly. Make sure that they're compiled and installed correctly before enabling SevenTasks.
@@ -183,7 +182,6 @@ To enable full font hinting just for Segoe UI, move the `fontconfig` folder to `
 
 To install custom branding for the Info Center, move `kcm-about-distrorc` from the `branding` folder to `~/.config/kdedefaults/`, then edit the file's `LogoPath` entry to point to the absolute path of `kcminfo.png`.
 
-
 ### Plymouth theme
 
 Optionally, install [PlymouthVista](https://github.com/furkrn/PlymouthVista) which supports Windows 7 boot animations, and features a more detailed setup guide.
@@ -209,7 +207,7 @@ $ chmod +x add_rule.sh && ./add_rule.sh
 ## Configuring AeroThemePlasma <a name="conf"></a>
 
 1. After installing everything, restart the computer. In SDDM, make sure to select the appropriate session (AeroThemePlasma (X11) or AeroThemePlasma (Wayland)).
-2. Apply the Global Theme after logging into the ATP session. 
+2. Apply the Global Theme after logging into the ATP session.
 3. Right click on the desktop and open "Desktop and Wallpaper", and select "Desktop (Win7)" under Layout, and apply the changes.
 4. In System Settings, apply the following settings:
 
@@ -229,7 +227,7 @@ $ chmod +x add_rule.sh && ./add_rule.sh
   - Dialog Parent
   - Dim Inactive
   - Dim Screen for Administrator Mode (From Focus category)
-  
+
 5. Configure KWin animations to the following:
 
 ![animations](screenshots/animations.png)
@@ -245,7 +243,7 @@ $ chmod +x add_rule.sh && ./add_rule.sh
 The following steps are optional:
 
 11. For Wine users it's recommended to install the [VistaVG Ultimate](https://www.deviantart.com/vishal-gupta/art/VistaVG-Ultimate-57715902) msstyles theme.
-13. Add the following to `~/.bashrc` to get bash to look more like the command prompt on Windows:
+12. Add the following to `~/.bashrc` to get bash to look more like the command prompt on Windows:
 
 ```bash
 PS1='C:${PWD//\//\\\\}> '
@@ -253,4 +251,4 @@ PS1='C:${PWD//\//\\\\}> '
 echo -e "Microsoft Windows [Version 6.1.7600]\nCopyright (c) 2009 Microsoft Corporation.  All rights reserved.\n"
 ```
 
-14. In the terminal emulator of your choice (e.g Konsole), set the font to [TerminalVector](https://www.yohng.com/software/terminalvector.html), size 9pt. Disable smooth font rendering and bold text, reduce the line spacing and margins to 0px, set the cursor shape to underline, and enable cursor blinking.
+13. In the terminal emulator of your choice (e.g Konsole), set the font to [TerminalVector](https://www.yohng.com/software/terminalvector.html), size 9pt. Disable smooth font rendering and bold text, reduce the line spacing and margins to 0px, set the cursor shape to underline, and enable cursor blinking.
