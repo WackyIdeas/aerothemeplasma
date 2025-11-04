@@ -78,7 +78,7 @@ MainWindow::MainWindow(QSpinBox *spinbox, QSpinBox *spinboxg, QCheckBox *checkbo
       "stop:0.106 ! }";
 
   ui->setupUi(this);
-  preventChanges = false;
+  preventChanges = true;
   cancelChanges = true;
 
   kcfg_AccentColorName = spinbox;
@@ -214,6 +214,8 @@ MainWindow::MainWindow(QSpinBox *spinbox, QSpinBox *spinboxg, QCheckBox *checkbo
   changeColor(selected_color);
 
   applyFilter();
+
+  preventChanges = false;
 }
 
 void MainWindow::applyFilter()
@@ -328,7 +330,6 @@ void MainWindow::resetToDefault() {
 
 void MainWindow::applyTemporarily() {
   KWin::BlurEffectConfig *conf = (KWin::BlurEffectConfig *)config_parent;
-
 
   int intensity;
   if(predefined_colors[selected_color].getColor().alpha() < 26) intensity = predefined_colors[selected_color].getColor().alpha();
