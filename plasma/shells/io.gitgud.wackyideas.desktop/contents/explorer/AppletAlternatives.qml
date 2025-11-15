@@ -5,7 +5,7 @@
 */
 
 import QtQuick 2.15
-import QtQuick.Controls 2.5 as QQC2
+import QtQuick.Controls as QQC2
 import QtQuick.Layouts 1.1
 import QtQuick.Window 2.1
 import org.kde.plasma.core as PlasmaCore
@@ -15,6 +15,7 @@ import org.kde.plasma.plasmoid
 import org.kde.kirigami 2.20 as Kirigami
 
 import org.kde.plasma.private.shell 2.0
+import org.kde.plasma.shell
 
 //PlasmaCore.Dialog {
 Window {
@@ -23,13 +24,21 @@ Window {
     //location: alternativesHelper.applet.Plasmoid.location
     //hideOnWindowDeactivate: true
     //backgroundHints: (alternativesHelper.applet.Plasmoid.containmentDisplayHints & PlasmaCore.Types.ContainmentPrefersOpaqueBackground) ? PlasmaCore.Dialog.SolidBackground : PlasmaCore.Dialog.StandardBackground
+    required property AlternativesHelper alternativesHelper
 
-    title: i18nd("plasma_shell_org.kde.plasma.desktop", "Alternative Widgets")
+    title: i18nd("plasma_shell_org.kde.plasma.desktop", "Alternative Widgets for %1", alternativesHelper.applet.Plasmoid.title)
 
     modality: Qt.ApplicationModal
     Component.onCompleted: {
-        flags = flags |  Qt.WindowStaysOnTopHint;
+        flags = flags | Qt.WindowStaysOnTopHint | Qt.Dialog;
         dialog.show();
+    }
+
+    onVisibleChanged: {
+        if(visible) {
+            dialog.x = (Screen.width - dialog.width) / 2;
+            dialog.y = (Screen.height - dialog.height) / 2;
+        }
     }
 
     minimumWidth: root.implicitWidth
@@ -43,7 +52,7 @@ Window {
         signal configurationChanged
 
         Layout.minimumWidth: Kirigami.Units.gridUnit * 20
-        Layout.minimumHeight: Math.min(Screen.height - Kirigami.Units.gridUnit * 10, implicitHeight)
+        Layout.minimumHeight: Math.min(Kirigami.Units.gridUnit*20, implicitHeight)
 
         LayoutMirroring.enabled: Qt.application.layoutDirection === Qt.RightToLeft
         LayoutMirroring.childrenInherit: true
@@ -92,7 +101,7 @@ Window {
             dialog.close();
         }
 
-        PlasmaComponents3.ScrollView {
+        QQC2.ScrollView {
             Layout.fillWidth: true
             Layout.fillHeight: true
             Layout.preferredWidth: Kirigami.Units.gridUnit * 20
