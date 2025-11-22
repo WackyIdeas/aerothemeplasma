@@ -91,6 +91,7 @@ private:
     struct GlideParams
     {
         RotationEdge edge;
+        bool accurateTilt;
         struct
         {
             qreal from;
