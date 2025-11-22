@@ -8,6 +8,10 @@
         <entry name="Duration" type="UInt">
             <default>0</default>
         </entry>
+        <entry name="AccurateTilt" type="Bool">
+            <default>true</default>
+            <label>Enables a more accurate tilt effect at a very minor performance cost.</label>
+        </entry>
         <entry name="InRotationEdge" type="Int">
             <default>0</default>
         </entry>

@@ -74,8 +74,10 @@ void GlideEffect::reconfigure(ReconfigureFlags flags)
 {
     Q_UNUSED(flags);
     GlideConfig::self()->read();
-    m_duration = std::chrono::milliseconds(animationTime<GlideConfig>(160ms));
+    // On Windows 7 and 8/8.1, window animations are approximately 250ms in duration.
+    m_duration = std::chrono::milliseconds(animationTime<GlideConfig>(250ms));
 
+    m_inParams.accurateTilt = GlideConfig::accurateTilt();
     m_inParams.edge = static_cast<RotationEdge>(GlideConfig::inRotationEdge());
     m_inParams.angle.from = GlideConfig::inRotationAngle();
     m_inParams.angle.to = 0.0;
@@ -84,6 +86,7 @@ void GlideEffect::reconfigure(ReconfigureFlags flags)
     m_inParams.opacity.from = GlideConfig::inOpacity();
     m_inParams.opacity.to = 1.0;
 
+    m_outParams.accurateTilt = GlideConfig::accurateTilt();
     m_outParams.edge = static_cast<RotationEdge>(GlideConfig::outRotationEdge());
     m_outParams.angle.from = 0.0;
     m_outParams.angle.to = GlideConfig::outRotationAngle();
@@ -97,9 +100,14 @@ void GlideEffect::prePaintWindow(EffectWindow *w, WindowPrePaintData &data, std:
 {
     auto animationIt = m_animations.find(w);
     if (animationIt != m_animations.end()) {
-
         // Calculate the transform and opacity data before any painting actually happens, before the next frame
         qreal t = animationIt->second.timeLine.value();
+        
+        // Add a hefty frame skip.
+        constexpr qreal dwmFrameSkipFactor = 2/60.0;
+        // This remaps t from [0, 1] to [dwmFrameSkipFactor, 1.0 - dwmFrameSkipFactor].
+        t = dwmFrameSkipFactor + (t * (1.0 - (2.0 * dwmFrameSkipFactor)));
+
         const GlideParams params = w->isDeleted() ? m_outParams : m_inParams;
         auto newOpacity = interpolate(params.opacity.from, params.opacity.to, t);
         w->setData(TRANSFORMATION_DATA, calculateTransform(w, params, t));
@@ -143,9 +151,20 @@ QMatrix4x4 GlideEffect::calculateTransform(EffectWindow *window, const GlidePara
         break;
 
     case RotationEdge::Bottom:
-        matrix.translate(window->width() / 2, window->height(), -distance);
-        matrix.rotate(angle, 1, 0, 0);
-        matrix.translate(-window->width() / 2, -window->height());
+        if (params.accurateTilt) {
+            // We tilt from the right side of the window (left).
+            // At defaults, this is about 3 degrees of tilt (3.33).
+            matrix.translate(0, window->height() / 2, -distance);
+            matrix.rotate(angle / 3, 0, 1, 0);
+            // Now we tilt from the bottom.
+            matrix.translate(window->width() / 2, window->height() / 2, -distance);
+            matrix.rotate(angle, 1, 0, 0);
+            matrix.translate(-window->width() / 2, -window->height());
+        } else {
+            matrix.translate(window->width() / 2, window->height(), -distance);
+            matrix.rotate(angle, 1, 0, 0);
+            matrix.translate(-window->width() / 2, -window->height());
+        }
         break;
 
     case RotationEdge::Left:
@@ -241,7 +260,9 @@ void GlideEffect::windowAdded(EffectWindow *w)
     animation.timeLine.reset();
     animation.timeLine.setDirection(TimeLine::Forward);
     animation.timeLine.setDuration(m_duration);
-    animation.timeLine.setEasingCurve(QEasingCurve::InCurve);
+    // Windows 7 uses a simple ease-out curve for opening windows.
+    // Note for Windows 8: Windows 8/8.1 uses a cubic ease-out curve.
+    animation.timeLine.setEasingCurve(QEasingCurve::OutCurve);
     animation.effect = ItemEffect(w->windowItem());
 
     redirect(w);
@@ -270,7 +291,8 @@ void GlideEffect::windowClosed(EffectWindow *w)
     animation.timeLine.reset();
     animation.timeLine.setDirection(TimeLine::Forward);
     animation.timeLine.setDuration(m_duration);
-    animation.timeLine.setEasingCurve(QEasingCurve::OutCurve);
+    // Windows 7 and 8/8.1 use a cubic ease-in curve for closing windows.
+    animation.timeLine.setEasingCurve(QEasingCurve::InCubic);
 
     redirect(w);
     effects->addRepaintFull();

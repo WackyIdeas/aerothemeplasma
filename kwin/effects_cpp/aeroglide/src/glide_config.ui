@@ -45,6 +45,16 @@
     </layout>
    </item>
    <item>
+    <widget class="QCheckBox" name="kcfg_AccurateTilt">
+     <property name="text">
+      <string>Enable a more accurate tilt effect.</string>
+     </property>
+     <property name="checked">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+   <item>
     <widget class="QGroupBox" name="groupBox_InAnimation">
      <property name="title">
       <string>Window Open Animation</string>
