@@ -25,25 +25,7 @@ ColumnLayout {
 
     Keys.forwardTo: [connectionView]
 
-    Kirigami.InlineMessage {
-        id: connectivityMessage
-        Layout.fillWidth: true
-        Layout.leftMargin: connectionView.leftMargin
-        Layout.rightMargin: connectionView.rightMargin
-        Layout.topMargin: Kirigami.Units.smallSpacing * 2
-        Layout.preferredHeight: contentItem.implicitHeight + topPadding + bottomPadding
-        type: Kirigami.MessageType.Information
-        icon.name: "dialog-password"
-        text: i18n("You need to log in to this network")
-        visible: connectionListPage.nmStatus.connectivity === NMQt.NetworkManager.Portal
-
-        actions: Kirigami.Action {
-            text: i18nc("@action:button", "Log in")
-            onTriggered: {
-                Qt.openUrlExternally(connectionListPage.nmStatus.networkCheckUrl);
-            }
-        }
-    }
+    //Qt.openUrlExternally(connectionListPage.nmStatus.networkCheckUrl);
     QQC2.ScrollView {
         id: scrollView
 
