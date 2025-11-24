@@ -153,18 +153,28 @@ void Decoration::smodPaintOuterBorder(QPainter *painter, const QRectF &repaintRe
     // Render the top side, which is always visible
     QPixmap p_top(s_top);
     auto t_m = sizingMargins().topSide();
+    auto l_m = sizingMargins().leftSide();
+    auto r_m = sizingMargins().rightSide();
+    auto b_m = sizingMargins().bottomSide();
     auto tl_m = sizingMargins().topLeftCorner();
     auto tr_m = sizingMargins().topRightCorner();
+
+    qreal modBorderLeft = borderLeft() + (hideInnerBorder() ? l_m.margin_right : 0);
+    qreal modBorderRight = borderRight() + (hideInnerBorder() ? r_m.margin_left : 0);
+    qreal modBorderTop = borderTop() + (hideInnerBorder() ? t_m.margin_bottom : 0);
+    qreal modBorderBottom = borderBottom() + (hideInnerBorder() ? b_m.margin_top : 0);
+
     FrameTexture top(0, 0,
                      isMaximized() ? 0 : t_m.margin_top,
                      t_m.margin_bottom,
-                     size().width() - borderLeft() - borderRight(), borderTop(),
+                     isMaximized() ? (size().width() - borderLeft() - borderRight()) : (size().width() - modBorderLeft - modBorderRight),
+                     isMaximized() ? borderTop() : modBorderTop,
                      &p_top,
                      1.0,
                      false,
                      tl_m.width, isMaximized() ? t_m.margin_top : 0,
                      p_top.width() - tl_m.width - tr_m.width, p_top.height() - (isMaximized() ? t_m.margin_top : 0));
-    top.translate(borderLeft(), 0);
+    top.translate(isMaximized() ? borderLeft() : modBorderLeft, 0);
     top.render(painter);
 
     if(!isMaximized()) // Render the rest of the decoration
@@ -173,9 +183,6 @@ void Decoration::smodPaintOuterBorder(QPainter *painter, const QRectF &repaintRe
         QPixmap p_right(s_right);
         QPixmap p_bottom(s_bottom);
 
-        auto l_m = sizingMargins().leftSide();
-        auto r_m = sizingMargins().rightSide();
-        auto b_m = sizingMargins().bottomSide();
         auto bl_m = sizingMargins().bottomLeftCorner();
         auto br_m = sizingMargins().bottomRightCorner();
 
@@ -184,8 +191,8 @@ void Decoration::smodPaintOuterBorder(QPainter *painter, const QRectF &repaintRe
                                  tl_m.margin_right,
                                  tl_m.margin_top,
                                  tl_m.margin_bottom,
-                                 borderLeft(),
-                                 borderTop(),
+                                 modBorderLeft,
+                                 modBorderTop,
                                  &p_top,
                                  1.0,
                                  false,
@@ -195,8 +202,8 @@ void Decoration::smodPaintOuterBorder(QPainter *painter, const QRectF &repaintRe
                                  tr_m.margin_right,
                                  tr_m.margin_top,
                                  tr_m.margin_bottom,
-                                 borderRight(),
-                                 borderTop(),
+                                 modBorderRight,
+                                 modBorderTop,
                                  &p_top,
                                  1.0,
                                  false,
@@ -207,8 +214,8 @@ void Decoration::smodPaintOuterBorder(QPainter *painter, const QRectF &repaintRe
                                  bl_m.margin_right,
                                  bl_m.margin_top,
                                  bl_m.margin_bottom,
-                                 borderLeft(),
-                                 borderBottom(),
+                                 modBorderLeft,
+                                 modBorderBottom,
                                  &p_bottom,
                                  1.0,
                                  false,
@@ -219,8 +226,8 @@ void Decoration::smodPaintOuterBorder(QPainter *painter, const QRectF &repaintRe
                                  br_m.margin_right,
                                  br_m.margin_top,
                                  br_m.margin_bottom,
-                                 borderRight(),
-                                 borderBottom(),
+                                 modBorderRight,
+                                 modBorderBottom,
                                  &p_bottom,
                                  1.0,
                                  false,
@@ -230,21 +237,21 @@ void Decoration::smodPaintOuterBorder(QPainter *painter, const QRectF &repaintRe
         FrameTexture        left(l_m.margin_left,
                                  l_m.margin_right,
                                  0, 0,
-                                 borderLeft(),
-                                 size().height()-borderBottom()-borderTop(),
+                                 modBorderLeft,
+                                 size().height()-modBorderBottom-modBorderTop,
                                  &p_left);
 
         FrameTexture       right(r_m.margin_left,
                                  r_m.margin_right,
                                  0, 0,
-                                 borderRight(),
-                                 size().height()-borderBottom()-borderTop(),
+                                 modBorderRight,
+                                 size().height()-modBorderBottom-modBorderTop,
                                  &p_right);
 
         FrameTexture      bottom(0, 0,
                                  b_m.margin_top,
                                  b_m.margin_bottom,
-                                 size().width() - borderLeft() - borderRight(), borderBottom(),
+                                 size().width() - modBorderLeft - modBorderRight, modBorderBottom,
                                  &p_bottom,
                                  1.0,
                                  false,
@@ -252,12 +259,12 @@ void Decoration::smodPaintOuterBorder(QPainter *painter, const QRectF &repaintRe
                                  p_bottom.width() - bl_m.width - br_m.width, p_bottom.height());
 
         // Move texture fragments to the appropriate locations
-        topright.translate(size().width() - borderRight(), 0);
-        bottomleft.translate(0, size().height() - borderBottom());
-        bottomright.translate(size().width() - borderRight(), size().height() - borderBottom());
-        left.translate(0, borderTop());
-        right.translate(size().width()-borderRight(), borderTop());
-        bottom.translate(borderLeft(), size().height() - borderBottom());
+        topright.translate(size().width() - modBorderRight, 0);
+        bottomleft.translate(0, size().height() - modBorderBottom);
+        bottomright.translate(size().width() - modBorderRight, size().height() - modBorderBottom);
+        left.translate(0, modBorderTop);
+        right.translate(size().width()-modBorderRight, modBorderTop);
+        bottom.translate(modBorderLeft, size().height() - modBorderBottom);
         // Render them all
         topleft.render(painter);
         topright.render(painter);
@@ -282,7 +289,7 @@ void Decoration::smodPaintTitleBar(QPainter *painter, const QRectF &repaintRegio
         int titleAlignment = internalSettings()->titleAlignment();
         bool invertText = internalSettings()->invertTextColor() && c->isMaximized();
 
-        QRect captionRect(m_leftButtons->geometry().right(), 0, m_rightButtons->geometry().left() - m_leftButtons->geometry().right() - 4, borderTop());
+        QRect captionRect(m_leftButtons->geometry().right(), 0, m_rightButtons->geometry().left() - m_leftButtons->geometry().right() - 4, borderTop() + (hideInnerBorder() ? sizingMargins().topSide().margin_bottom : 0));
         QString caption = settings()->fontMetrics().elidedText(c->caption(), Qt::ElideMiddle, captionRect.width());
         QStringList programname = caption.split(" — ");
         caption.remove(" — " + programname.at(programname.size()-1));
