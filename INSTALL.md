@@ -42,6 +42,18 @@ On Fedora, additional dependencies for X11 include:
 - `kwin-x11`
 - `kwin-x11-devel`
 
+### openSUSE Leap / Tumbleweed
+
+Required packages:
+
+```bash
+zypper install cmake make ninja gcc gcc-c++ gmp-ecm-devel kf6-extra-cmake-modules qt6-base-devel qt6-quick-devel qt6-svg-devel qt6-quickcontrols2-devel kf6-kwindowsystem-devel kf6-karchive-devel kf6-kirigami-devel kf6-kbookmarks-devel kf6-kcodecs-devel kf6-kcolorscheme-devel kf6-kcompletion-devel kf6-kconfig-devel kf6-kconfigwidgets-devel kf6-kcoreaddons-devel kf6-kguiaddons-devel kf6-ki18n-devel kf6-kio-devel kf6-kitemviews-devel kf6-kjobwidgets-devel kf6-kservice-devel kf6-kwidgetsaddons-devel kf6-kxmlgui-devel kf6-solid-devel kf6-kglobalaccel-devel kf6-kiconthemes-devel kf6-knotifications-devel kf6-kpackage-devel kf6-ksvg-devel plasma6-activities-devel plasma-wayland-protocols qt6-wayland-devel qt6-quicktest-devel qt6-gui-private-devel kdecoration6-devel kf6-kcmutils-devel qt6-uitools-devel kf6-kcrash-devel libepoxy-devel kwin6-devel kwin6-x11-devel kf6-qqc2-desktop-style-devel knotifications-devel kf6-kauth-devel libplasma6-devel plasma5support6-devel plasma6-activities-stats-devel plasma6-workspace-devel
+```
+
+In openSUSE, additional dependencies for X11 include:
+
+- `kwin6-x11-devel`
+
 ## Getting started <a name="started"></a>
 
 To download this repository, clone it with `git`:
