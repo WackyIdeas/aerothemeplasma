@@ -9,7 +9,7 @@ Things that are helpful when writing an issue:
 - Try to describe the problem as best as possible
 - Is the issue consistently reproducible? If so, provide the steps to reproduce the issue
 - If the problem is visual, try to record it or screenshot it
-- Provide logs of `plasmashell`, `kwin_x11`, `kwin_wayland` etc. as the issue occurs
+- Provide logs of `plasmashell`, `kwin_x11`, `kwin_wayland` etc. as the issue occurs. For more information regarding testing and logging, read [DOCUMENTATION.md](./DOCUMENTATION.md).
 - Provide the following relevant specifications of your system:
     - Linux distribution, version and CPU architecture
     - Qt, KDE and KDE Frameworks versions
