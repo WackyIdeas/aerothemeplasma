@@ -44,7 +44,7 @@ PlasmoidItem {
 
     preferredRepresentation: null
     compactRepresentation: compactRepresentation
-    fullRepresentation: menuRepresentation
+    fullRepresentation: Item {  } // fixes SevenStart breaking in Wayland somehow
     Plasmoid.constraintHints: Plasmoid.CanFillArea
     activationTogglesExpanded: false
 
