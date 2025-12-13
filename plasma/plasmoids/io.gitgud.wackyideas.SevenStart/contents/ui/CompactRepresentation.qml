@@ -39,6 +39,29 @@ Item {
     height: Layout.maximumHeight
     property bool compositing: false
 
+    Binding {
+        target: kicker
+        property: "Layout.minimumHeight"
+        value: root.Layout.minimumHeight
+    }
+
+    Binding {
+        target: kicker
+        property: "Layout.maximumHeight"
+        value: root.Layout.maximumHeight
+    }
+
+    Binding {
+        target: kicker
+        property: "Layout.minimumWidth"
+        value: root.Layout.minimumWidth
+    }
+    Binding {
+        target: kicker
+        property: "Layout.maximumWidth"
+        value: root.Layout.maximumWidth
+    }
+
     property QtObject contextMenu: null
     property QtObject dashWindow: null
     readonly property bool editMode: Plasmoid.containment.corona.editMode
