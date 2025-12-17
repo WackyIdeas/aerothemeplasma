@@ -42,24 +42,14 @@ PlasmoidItem {
     property QtObject systemFavorites: rootModel.systemFavoritesModel
     property bool compositingEnabled: KWindowSystem.isPlatformX11 ? KX11Extras.compositingActive : true
 
-    preferredRepresentation: null
-    compactRepresentation: compactRepresentation
-    fullRepresentation: menuRepresentation
     Plasmoid.constraintHints: Plasmoid.CanFillArea
     activationTogglesExpanded: false
 
     toolTipMainText: i18n("Start")
     toolTipSubText: ""
 
-    Component {
-        id: compactRepresentation
-        CompactRepresentation { id: compactRepresentation }
-    }
-
-    Component {
-        id: menuRepresentation
-        MenuRepresentation { id: menuRepresentation }
-    }
+    CompactRepresentation { id: compactRepresentation; anchors.fill: parent }
+    MenuRepresentation { id: menuRepresentation }
 
     // Used to run separate programs through this plasmoid.
     Plasma5Support.DataSource {
