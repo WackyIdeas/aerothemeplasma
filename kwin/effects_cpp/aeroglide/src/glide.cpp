@@ -104,7 +104,7 @@ void GlideEffect::prePaintWindow(EffectWindow *w, WindowPrePaintData &data, std:
         qreal t = animationIt->second.timeLine.value();
         
         // Add a hefty frame skip.
-        constexpr qreal dwmFrameSkipFactor = 2/60.0;
+        constexpr qreal dwmFrameSkipFactor = 1/60.0;
         // This remaps t from [0, 1] to [dwmFrameSkipFactor, 1.0 - dwmFrameSkipFactor].
         t = dwmFrameSkipFactor + (t * (1.0 - (2.0 * dwmFrameSkipFactor)));
 
@@ -291,8 +291,7 @@ void GlideEffect::windowClosed(EffectWindow *w)
     animation.timeLine.reset();
     animation.timeLine.setDirection(TimeLine::Forward);
     animation.timeLine.setDuration(m_duration);
-    // Windows 7 and 8/8.1 use a cubic ease-in curve for closing windows.
-    animation.timeLine.setEasingCurve(QEasingCurve::InCubic);
+    animation.timeLine.setEasingCurve(QEasingCurve::InQuad);
 
     redirect(w);
     effects->addRepaintFull();
