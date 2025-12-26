@@ -6,6 +6,7 @@
 2. [Frequently asked questions](#faq)
 3. [List of components](#list-of-components)
 4. [Development resources](#development)
+5. [Current Wayland issues](#wayland)
 
 
 ## Introduction <a name="intro"></a>
@@ -30,7 +31,7 @@ Ultimately, this project doesn't change the fact that the underlying operating s
 
 Kinda.
 
-AeroThemePlasma should largely work on Wayland, save for some visual quirks that haven't been ironed out yet. There are certain issues that Wayland presents that makes development on it a bit cumbersome, as well as KWin lacking features that ATP relies on under X11. See [Wayland issues] (Coming soon) for specific details. 
+AeroThemePlasma should largely work on Wayland, save for some visual quirks that haven't been ironed out yet. There are certain issues that Wayland presents that makes development on it a bit cumbersome, as well as KWin lacking features that ATP relies on under X11. See [Current Wayland issues](#wayland) for specific details. 
 
 ### What about HiDPI?
 
@@ -42,7 +43,7 @@ Only Arch-based distributions are supported officially for AeroThemePlasma, and 
 
 ### Do you plan on recreating the file explorer (along with other Windows applications)?
 
-Most likely no. It's out of ATP's scope. In case this changes however, most likely the only recreation would be the file explorer. 
+Most likely no. It's out of ATP's scope. [Sevulet](https://gitgud.io/snailatte/sevulet) is a set of projects that, among other things, features a solid file explorer recreation. Please support their work! 
 
 ## List of components <a name="list-of-components"></a>
 
@@ -232,3 +233,16 @@ Alternatively, logs can be retrieved graphically from systemd's journal by using
 - Sound theme ([Freedesktop specification](https://eode.pages.freedesktop.org/xdg-specs/sound-theme-spec/sound-theme-spec-latest.html))
 
 *While Kvantum won't be discussed here, one important detail worth mentioning is that Kvantum does not respect KDE's color schemes for the most part and that this sometimes leads to unexpected visual results. Still, it's recommended to apply a KDE color scheme alongside Kvantum for maximum compatibility.
+
+## Current Wayland issues <a name="wayland"></a>
+
+Some of these issues are fixable but not a lot of effort has been put into doing so, while some are inherent issues with Wayland that as of now cannot be easily fixed. This list will be updated accordingly if/when issues are resolved.
+
+1. Wayland cannot properly identify context menus and dropdown context menus (labelled as `popupMenu` and `dropdownMenu` respectively in the KWin effects API). As a result, context menus on Wayland will always fade in and out with the `fadingpopupsaero` effect.
+2. Certain animation effects play for certain windows even though they shouldn't, this is usually caused by different window identification and/or the inability to identify such windows (As the first issue points out). Most of these can likely be fixed in the future. 
+3. SevenTasks uses window positioning to animate its jumplists which isn't smooth or reliable on Wayland, as client-side window positioning on Wayland is not supported as part of the protocol spec. (See [xx-zones](https://gitlab.freedesktop.org/wayland/wayland-protocols/-/merge_requests/264) for more insight on the state of window positioning on Wayland). This is arguably bad practice in any case and should be replaced with some kind of KWin effect that actually performs the sliding animation.
+4. SevenTasks jumplists (and context menus in general) cannot steal mouse inputs from all other windows, which might potentially result in strange behavior.
+5. SevenStart's blur region often lags behind or doesn't appear at all upon opening the menu. This can likely be fixed by restructuring SevenStart in some way, but not much time has been spent fixing this bug. 
+6. SevenStart's floating orb positioning fails only sometimes. Additionally, because Wayland doesn't allow client windows to raise themselves, in some cases the floating orb will appear permanently stuck underneath the panel and its child windows until the shell is restarted.
+6. Aero Peek is not visible on Wayland, although the windows do properly fade in and out of view. This should most likely be replaced with a proper KWin effect that renders the Aero Peek windows in place of regular windows. 
+7. HiDPI is not properly supported for SMOD. See #252 for more details. This is an issue for both X11 and Wayland, but X11 has an easier workaround as KDecoration3 on X11 ignores DPI scaling entirely.
