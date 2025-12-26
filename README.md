@@ -76,6 +76,7 @@ Huge thanks to everyone who helped out along the way by contributing, testing, p
 - [WinXplorer](https://gitgud.io/catpswin56/winxplorer) by catpswin56
 - [SMOD Themes](https://gitgud.io/catpswin56/smod-themes) by catpswin56, a collection of themes that can be used with the SMOD window decoration theme
 - [Ice2K.sys](https://toiletflusher.neocities.org/ice2k/) by 0penrc
+- [Sevulet](https://gitgud.io/snailatte/sevulet) by [snailatte](https://gitgud.io/snailatte)
 
 ## Vista variant
 
