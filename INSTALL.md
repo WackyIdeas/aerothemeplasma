@@ -54,6 +54,17 @@ In openSUSE, additional dependencies for X11 include:
 
 - `kwin6-x11-devel`
 
+### Ubuntu 25.10
+
+```bash
+apt install build-essential cmake ninja-build curl libqt6virtualkeyboard6 libqt6multimedia6 libqt6core5compat6 libplasma5support6 libkdecorations3-dev libkf6colorscheme-dev libkf6i18n-dev libkf6iconthemes-dev libkf6kcmutils-dev libkirigami-dev libkf6kio-dev libkf6notifications-dev libkf6svg-dev libkf6crash-dev libkf6globalaccel-dev libplasma-dev libplasmaactivities-dev libxcb-composite0-dev libxcb-randr0-dev libxcb-shm0-dev libxcb-damage0-dev libepoxy-dev libqt6svg6-dev kwin-dev plasma-wayland-protocols
+```
+
+On Ubuntu, additional dependencies for X11 include:
+
+- `kwin-x11`
+- `kwin-x11-dev`
+
 ## Getting started <a name="started"></a>
 
 To download this repository, clone it with `git`:
