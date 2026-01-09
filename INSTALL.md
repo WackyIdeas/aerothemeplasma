@@ -7,6 +7,7 @@
 3. [Using install scripts](#scripts)
 4. [Manual installation](#manual)
 5. [Configuring AeroThemePlasma](#conf)
+6. [GTK](#gtk)
 
 ## Prerequisites <a name="preq"></a>
 
@@ -275,3 +276,8 @@ echo -e "Microsoft Windows [Version 6.1.7600]\nCopyright (c) 2009 Microsoft Corp
 ```
 
 13. In the terminal emulator of your choice (e.g Konsole), set the font to [TerminalVector](https://www.yohng.com/software/terminalvector.html), size 9pt. Disable smooth font rendering and bold text, reduce the line spacing and margins to 0px, set the cursor shape to underline, and enable cursor blinking.
+
+## GTK <a name="gtk"></a>
+
+AeroThemePlasma officially doesn't have any kind of maintenance, development or support for GTK applications. Instead, check out
+[Windows 7 Better](https://gitgud.io/Gamer95875/Windows-7-Better) by [Gamer95875](https://gitgud.io/Gamer95875), which is the recommended set of themes that works best with AeroThemePlasma.
