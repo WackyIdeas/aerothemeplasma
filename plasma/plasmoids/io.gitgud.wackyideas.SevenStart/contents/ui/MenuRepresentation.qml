@@ -1009,7 +1009,7 @@ PlasmaCore.Dialog {
 
         Column {
             id: sidePanel
-            z: 7
+            z: searching ? 3 : 7
             anchors{
                 left: leftSidebar.right
                 top: parent.top
