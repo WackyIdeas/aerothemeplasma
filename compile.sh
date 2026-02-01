@@ -24,7 +24,7 @@ fi
 # Requires a restart to be applied.
 if [[ "$*" != *"--skip-libplasma"* ]]; then
     cd "$PWD/misc/libplasma"
-    sh $USE_SCRIPT $@
+    bash $USE_SCRIPT $@
     cd "$CUR_DIR"
 fi
 #echo "Compiling plasmoids..."
@@ -40,19 +40,19 @@ fi
 # Compiles the window decoration theme engine.
 echo "Compiling SMOD decorations..."
 cd "$PWD/kwin/decoration"
-sh $USE_SCRIPT $@
+bash $USE_SCRIPT $@
 cd "$CUR_DIR"
 echo "Done."
 
 echo -e "Installing login manager entries..."
 cd "$PWD/plasma/sddm/login-sessions"
-sh $USE_SCRIPT
+bash $USE_SCRIPT
 echo "Done."
 
 # Compiles the settings KCM loader used for development and quick access of certain settings pages.
 echo "Compiling KCM loader..."
 cd "$PWD/plasma/aerothemeplasma-kcmloader"
-sh $USE_SCRIPT $@
+bash $USE_SCRIPT $@
 cd "$CUR_DIR"
 echo "Done."
 
@@ -61,7 +61,7 @@ echo "Compiling KWin effects..."
 for filename in "$PWD/kwin/effects_cpp/"*; do
     cd "$filename"
     echo "Compiling $(pwd)"
-    sh $USE_SCRIPT $@
+    bash $USE_SCRIPT $@
     echo "Done."
     cd "$CUR_DIR"
 done

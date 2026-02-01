@@ -35,7 +35,7 @@ else
     for filename in "$PWD/plasma/plasmoids/src/"*; do
         cd "$filename"
         echo "Compiling $(pwd)"
-        sh $USE_SCRIPT $@
+        bash $USE_SCRIPT $@
         echo "Done."
         cd "$CUR_DIR"
     done

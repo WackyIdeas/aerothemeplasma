@@ -45,8 +45,8 @@ function uninstall_cmake_component {
         echo -e "File install_manifest.txt in $CUR_DIR/$1 was not found."
         echo -e "If this component was already removed from the system, you can ignore this message.\n"
         echo -e "Otherwise, to generate this file, run the compile.sh and install_plasmoids.sh scripts again like this:"
-        echo -e "$ sh compile.sh --skip-libplasma [--ninja]"
-        echo -e "$ sh install_plasmoids.sh --skip-kpackages [--ninja]"
+        echo -e "$ bash compile.sh --skip-libplasma [--ninja]"
+        echo -e "$ bash install_plasmoids.sh --skip-kpackages [--ninja]"
         echo -e "Afterwards, re-run this script."
     else
         cd "$CUR_DIR/$1"
