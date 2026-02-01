@@ -148,4 +148,13 @@
       <default>false</default>
     </entry>
   </group>
+
+  <group name="Watermark">
+    <entry name="watermarkVisible" type="Bool">
+      <default>false</default>
+    </entry>
+    <entry name="watermarks" type="String">
+      <default>[]</default>
+    </entry>
+  </group>
 </kcfg>

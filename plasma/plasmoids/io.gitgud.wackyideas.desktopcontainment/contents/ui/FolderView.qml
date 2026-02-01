@@ -244,6 +244,20 @@ FocusScope {
         id: eventGenerator
     }
 
+    Watermark {
+        id: watermark
+
+        anchors {
+            right: parent.right
+            bottom: parent.bottom
+
+            rightMargin: 5
+            bottomMargin: 5
+        }
+
+        width: Math.floor(parent.width/4)
+    }
+
     MouseEventListener {
         id: listener
 
