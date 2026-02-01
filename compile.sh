@@ -1,8 +1,9 @@
 #!/bin/bash
 
 # You can pass the following arguments to this script:
-# --ninja       Uses Ninja for faster compilation
-# --wayland     Tells the KWin build scripts to compile the C++ effects for Wayland
+# --ninja           Uses Ninja for faster compilation
+# --wayland         Tells the KWin build scripts to compile the C++ effects for Wayland
+# --skip-libplasma  Skips compiling libplasma patches
 
 CUR_DIR=$(pwd)
 USE_SCRIPT="install.sh"
@@ -21,9 +22,11 @@ fi
 
 # Compiles the libplasma patches required for other components of ATP.
 # Requires a restart to be applied.
-cd "$PWD/misc/libplasma"
-sh $USE_SCRIPT $@
-cd "$CUR_DIR"
+if [[ "$*" != *"--skip-libplasma"* ]]; then
+    cd "$PWD/misc/libplasma"
+    sh $USE_SCRIPT $@
+    cd "$CUR_DIR"
+fi
 #echo "Compiling plasmoids..."
 
 #for filename in "$PWD/plasma/plasmoids/src/"*; do
@@ -39,6 +42,11 @@ echo "Compiling SMOD decorations..."
 cd "$PWD/kwin/decoration"
 sh $USE_SCRIPT $@
 cd "$CUR_DIR"
+echo "Done."
+
+echo -e "Installing login manager entries..."
+cd "$PWD/plasma/sddm/login-sessions"
+sh $USE_SCRIPT
 echo "Done."
 
 # Compiles the settings KCM loader used for development and quick access of certain settings pages.

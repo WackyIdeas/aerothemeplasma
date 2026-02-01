@@ -27,7 +27,7 @@ fi
 # Skips the build process of plasmoids that have C++ components
 # Most of the time, recompiling isn't needed as most changes are done
 # on the QML side.
-if [[ $1 == '--no-compile' ]]; then
+if [[ "$*" == *"--no-compile"* ]]; then
     echo "Skipping compilation..."
 else
     echo "Compiling plasmoids..."
@@ -65,12 +65,15 @@ function install_plasmoid {
 # As such, we need to first terminate plasmashell in order to retain
 # saved configurations
 
-killall plasmashell
+if [[ "$*" == *"--skip-kpackages"* ]]; then
+    echo -e "Skipping QML Plasmoids"
+else
+    killall plasmashell
+    for filename in "$PWD/plasma/plasmoids/"*; do
+        install_plasmoid "$filename"
+    done
+    setsid plasmashell --replace & # Restart plasmashell and detach it from the script
+fi
 
-for filename in "$PWD/plasma/plasmoids/"*; do
-    install_plasmoid "$filename"
-done
-
-setsid plasmashell --replace & # Restart plasmashell and detach it from the script
 
 
