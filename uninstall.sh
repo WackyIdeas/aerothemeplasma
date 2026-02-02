@@ -235,6 +235,18 @@ if [ "$?" == 1 ]; then
     echo "Done."
 fi
 
+LIBDIR="/usr/lib/x86_64-linux-gnu/"
+if [ ! -d ${LIBDIR} ]; then
+	LIBDIR="/usr/lib64/"
+fi
+APPLET_DIR="${LIBDIR}qt6/plugins/plasma/applets/"
+uninstall_prompt "Plasma applets (requires sudo privileges)" "${APPLET_DIR}/io.gitgud.wackyideas."*
+if [ "$?" == 1 ]; then
+    echo "Uninstalling Plasma applet plugins..."
+    pkexec rm -r "${APPLET_DIR}/io.gitgud.wackyideas."*
+    echo "Done."
+fi
+
 echo "Uninstalling /opt/aerothemeplasma..."
 pkexec rm -r "/opt/aerothemeplasma"
 echo "Done."
