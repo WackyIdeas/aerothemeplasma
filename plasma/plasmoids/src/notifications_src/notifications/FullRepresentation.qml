@@ -28,6 +28,12 @@ import "components" as Components
 PlasmaExtras.Representation {
     id: fullRepresentationRoot
 
+    function fixDpi(val) {
+        if(Screen.devicePixelRatio !== 1.0) {
+            return Math.floor(val*Screen.devicePixelRatio) / Screen.devicePixelRatio;
+        }
+        return val;
+    }
     // TODO these should be configurable in the future
     readonly property int dndMorningHour: 6
     readonly property int dndEveningHour: 20
@@ -263,6 +269,7 @@ PlasmaExtras.Representation {
         anchors.fill: parent
         anchors.bottomMargin: 2
         anchors.rightMargin: -2
+        anchors.leftMargin: -2
         background: null
         focus: true
         clip: true
@@ -370,7 +377,7 @@ PlasmaExtras.Representation {
 
             delegate: DraggableDelegate {
                 id: delegate
-                width: ListView.view.width
+                width: fixDpi(ListView.view.width)
                 opacity: 0
 
                 required property int index
@@ -643,8 +650,7 @@ PlasmaExtras.Representation {
 
             Loader {
                 anchors.centerIn: parent
-                width: parent.width - (Kirigami.Units.gridUnit * 4)
-
+                width: fixDpi(parent.width - Kirigami.Units.gridUnit * 4);
                 active: list.count === 0
                 visible: active
                 asynchronous: true
@@ -657,6 +663,7 @@ PlasmaExtras.Representation {
 
                 PlasmaExtras.PlaceholderMessage {
                     anchors.centerIn: parent
+                    anchors.alignWhenCentered: Screen.devicePixelRatio == 1.0
                     width: parent.width
 
                     iconName: "checkmark"
@@ -672,6 +679,7 @@ PlasmaExtras.Representation {
                     readonly property NotificationManager.ServerInfo currentOwner: NotificationManager.Server.currentOwner
 
                     anchors.centerIn: parent
+                    anchors.alignWhenCentered: Screen.devicePixelRatio == 1.0
                     width: parent.width
 
                     iconName: "notifications-disabled"
