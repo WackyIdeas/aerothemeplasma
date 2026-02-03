@@ -11,9 +11,9 @@ if [[ -z "$(command -v qdbus6)" ]]; then
     exit
 fi
 
-SHELL=$(qdbus6 org.kde.plasmashell /PlasmaShell shell)
+PLASMASHELL=$(qdbus6 org.kde.plasmashell /PlasmaShell shell)
 
-if [ $SHELL == "io.gitgud.wackyideas.desktop" ]; then
+if [ $PLASMASHELL == "io.gitgud.wackyideas.desktop" ]; then
     echo -e "You shouldn't run the uninstall script from AeroThemePlasma itself."
     echo -e "Please run the uninstall script from the Plasma session or another session."
     exit
