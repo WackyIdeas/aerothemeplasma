@@ -605,6 +605,7 @@ TaskManagerApplet.SmartLauncherItem { }
         onTapped: leftClick()
 
         function leftClick() {
+
             if(tasksRoot.pinnedToolTipOpen) {
                 task.hideImmediately();
                 tasksRoot.pinnedToolTipOpen = false;
@@ -1367,6 +1368,20 @@ TaskManagerApplet.SmartLauncherItem { }
 
                 onSourceChanged: {
                     containerRect.glowColor = Plasmoid.getDominantColor(iconBox.source);
+                    badge.badgeColor = containerRect.glowColor
+                }
+
+                Badge {
+                    id: badge
+                    visible: task.smartLauncherItem && task.smartLauncherItem.countVisible
+                    number: task.smartLauncherItem.count
+                    anchors.top: parent.top
+                    anchors.right: parent.right
+                    anchors.rightMargin: (tasksRoot.height <= 30) ? -Kirigami.Units.largeSpacing : -Kirigami.Units.smallSpacing
+                    anchors.topMargin: (tasksRoot.height <= 30) ? -Kirigami.Units.smallSpacing : 0
+                    Component.onCompleted: {
+                        badgeColor = containerRect.glowColor
+                    }
                 }
             }
 
