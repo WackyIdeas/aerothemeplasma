@@ -559,11 +559,15 @@ Item {
                     family: Plasmoid.configuration.fontFamily || Kirigami.Theme.defaultFont.family
                     weight: Plasmoid.configuration.boldText ? Font.Bold : Kirigami.Theme.defaultFont.weight
                     italic: Plasmoid.configuration.italicText
-                    pointSize: Plasmoid.configuration.fontSize || Kirigami.Theme.defaultFont.pointSize
+                    pointSize: (Plasmoid.configuration.fontSize || Kirigami.Theme.defaultFont.pointSize)
                     hintingPreference: Font.PreferFullHinting
                 }
                 minimumPixelSize: 1
-                style: Screen.devicePixelRatio == 1.0 ? Text.Outline : Text.Raised
+                style: {
+                    if(Screen.devicePixelRatio == 1.0) return Text.Outline;
+                    if(Screen.devicePixelRatio >= 2.0) return Text.Normal;
+                    return Text.Raised;
+                }
                 styleColor: "transparent"
                 text: {
                     // get the time for the given timezone from the dataengine
@@ -606,8 +610,12 @@ Item {
                 font.hintingPreference: Font.PreferFullHinting
                 minimumPixelSize: 1
 
-                style: Screen.devicePixelRatio == 1.0 ? Text.Outline : Text.Raised
                 styleColor: "transparent"
+                style: {
+                    if(Screen.devicePixelRatio == 1.0) return Text.Outline;
+                    if(Screen.devicePixelRatio >= 2.0) return Text.Normal;
+                    return Text.Raised;
+                }
                 visible: false
                 horizontalAlignment: Text.AlignHCenter
                 verticalAlignment: Text.AlignVCenter
@@ -625,7 +633,11 @@ Item {
             font.pixelSize: timeLabel.font.pixelSize
             font.hintingPreference: Font.PreferFullHinting
             minimumPixelSize: 1
-            style: Screen.devicePixelRatio == 1.0 ? Text.Outline : Text.Raised
+            style: {
+                if(Screen.devicePixelRatio == 1.0) return Text.Outline;
+                if(Screen.devicePixelRatio >= 2.0) return Text.Normal;
+                return Text.Raised;
+            }
             styleColor: "transparent"
             horizontalAlignment: Text.AlignHCenter
             verticalAlignment: Text.AlignVCenter
