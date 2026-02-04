@@ -59,6 +59,7 @@ Huge thanks to everyone who helped out along the way by contributing, testing, p
 - [AngelBruni](https://github.com/angelbruni) for contributing several SVG textures, most notably the clock in DigitalClockLite Seven
 - [ricewind012](https://github.com/ricewind012/) for .bashrc Microsoft Windows header
 - [furkrn](https://gitgud.io/furkrn) for creating and maintaining the [Plymouth theme](https://github.com/furkrn/PlymouthVista)
+- [IcyGuidance](https://gitgud.io/IcyGuidance) for designing the notification badges in SevenTasks
 
 ### Special Thanks 
 
